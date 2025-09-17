@@ -1,0 +1,36 @@
+name: Demo Action Types
+
+on:
+  push:
+    branches: [main, develop]
+  workflow_dispatch:
+
+jobs:
+  demo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use JS action
+        id: js
+        uses: ./.github/actions/js-hello
+        with:
+          name: "Matrix Learner"
+
+      - name: Use Docker action
+        id: docker
+        uses: ./.github/actions/docker-hello
+        with:
+          name: "Container Fan"
+
+      - name: Use Composite action
+        id: composite
+        uses: ./.github/actions/composite-hello
+        with:
+          name: "Glue Master"
+
+      - name: Summarize outputs
+        run: |
+          echo "JS message      : ${{ steps.js.outputs.message }}"
+          echo "Docker message  : ${{ steps.docker.outputs.message }}"
+          echo "Composite message: ${{ steps.composite.outputs.message }}"
