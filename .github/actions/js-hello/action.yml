@@ -1,0 +1,14 @@
+# .github/actions/js-hello/action.yml
+name: "JS Hello"
+description: "Says hello from a JavaScript action"
+inputs:
+  name:
+    description: "Name to greet"
+    required: false
+    default: "world"
+outputs:
+  message:
+    description: "The greeting that was printed"
+runs:
+  using: node20
+  main: dist/index.js   # use dist after bundling; for quick test you can point to src/index.js
