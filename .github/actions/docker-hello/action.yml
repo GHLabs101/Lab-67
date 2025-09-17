@@ -1,0 +1,16 @@
+# .github/actions/docker-hello/action.yml
+name: "Docker Hello"
+description: "Says hello from inside a container"
+inputs:
+  name:
+    description: "Name to greet"
+    required: false
+    default: "world"
+outputs:
+  message:
+    description: "Greeting string"
+runs:
+  using: docker
+  image: Dockerfile
+  args:
+    - ${{ inputs.name }}
