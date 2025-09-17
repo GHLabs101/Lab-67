@@ -1,0 +1,30 @@
+# .github/actions/composite-hello/action.yml
+name: "Composite Hello"
+description: "Runs a few shell steps and reuses existing actions"
+inputs:
+  name:
+    description: "Name to greet"
+    required: false
+    default: "world"
+outputs:
+  message:
+    description: "Greeting from composite"
+    value: ${{ steps.make-msg.outputs.message }}
+runs:
+  using: "composite"
+  steps:
+    - name: Print Node & OS (example reuse)
+      uses: actions/setup-node@v4
+      with:
+        node-version: "20"
+
+    - name: Make message
+      id: make-msg
+      shell: bash
+      run: |
+        MSG="🧩 Hello, ${{ inputs.name }} (from Composite action)!"
+        echo "message=$MSG" >> "$GITHUB_OUTPUT"
+
+    - name: Echo message
+      shell: bash
+      run: echo "${{ steps.make-msg.outputs.message }}"
